@@ -4,6 +4,9 @@ import AdvertisementBanner from './Components/AdvertisementBanner.jsx'
 import FarmHeroSection from './Components/FarmHeroSection.jsx'
 import CategorySection from './Components/CategorySection.jsx'
 import PopularProductsSection from './Components/PopularProductsSection.jsx'
+import OurOffer from './Components/OurOffer.jsx'
+import CustormerComment from './Components/CustormerComment.jsx'
+import Footer from './Components/Footer.jsx'
 import { LanguageContext } from './context/LanguageContext.jsx'
 import './App.css'
 
@@ -20,7 +23,10 @@ function App() {
         <FarmHeroSection />
         <CategorySection />
         <PopularProductsSection />
+        <OurOffer />
+        <CustormerComment />
       </main>
+      <Footer />
     </div>
   )
 }

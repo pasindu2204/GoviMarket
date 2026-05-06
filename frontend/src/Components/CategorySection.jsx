@@ -64,17 +64,31 @@ function CategorySection() {
         { id: 4, title: 'தேன் மற்றும் கிதுல்', count: '40+ வகைகள்', image: '🍯', badge: '100% இயற்கை' },
       ],
     },
-    Si: [
-      { id: 1, title: 'එළවළු', count: '340+ වර්ගයන්', image: '🥬', badge: 'ताजा' },
-      { id: 2, title: 'මසු සහ වියළි මසු', count: '120+ වර්ගයන්', image: '🐟', badge: 'සුවඳ' },
-      { id: 3, title: 'පළතුරු', count: '280+ වර්ගයන්', image: '🍊', badge: '' },
-      { id: 4, title: 'පැණි සහ කිතුල්', count: '40+ වර්ගයන්', image: '🍯', badge: '100% ස්වාභාවික' },
-    ],
+    Si: {
+      all: [
+        { id: 1, title: 'එළවළු', count: '340+ වර්ගයන්', image: '🥬', badge: 'ताजा' },
+        { id: 2, title: 'මසු සහ වියළි මසු', count: '120+ වර්ගයන්', image: '🐟', badge: 'සුවඳ' },
+        { id: 3, title: 'පළතුරු', count: '280+ වර්ගයන්', image: '🍊', badge: '' },
+        { id: 4, title: 'පැණි සහ කිතුල්', count: '40+ වර්ගයන්', image: '🍯', badge: '100% ස්වාභාවික' },
+      ],
+      vegetables: [
+        { id: 1, title: 'එළවළු', count: '340+ වර්ගයන්', image: '🥬', badge: 'ताजा' },
+      ],
+      fruits: [
+        { id: 3, title: 'පළතුරු', count: '280+ වර්ගයන්', image: '🍊', badge: '' },
+      ],
+      fish: [
+        { id: 2, title: 'මසු සහ වියළි මසු', count: '120+ වර්ගයන්', image: '🐟', badge: 'සුවඳ' },
+      ],
+      honey: [
+        { id: 4, title: 'පැණි සහ කිතුල්', count: '40+ වර්ගයන්', image: '🍯', badge: '100% ස්වාභාවික' },
+      ],
+    },
   }
 
   const currentCategories = categories[language] || categories.En
   const currentProducts = products[language] || products.En
-  const displayProducts = currentProducts[activeCategory] || currentProducts.all
+  const displayProducts = currentProducts?.[activeCategory] || currentProducts?.all || []
 
   return (
     <section className="bg-slate-900 py-16 px-6 md:px-12">
@@ -89,7 +103,7 @@ function CategorySection() {
                 px-5 py-2 rounded-full font-semibold text-sm transition-all duration-300 flex items-center gap-2
                 ${
                   activeCategory === category.id
-                    ? 'bg-gradient-to-r from-yellow-500 to-yellow-400 text-slate-900 shadow-lg scale-105'
+                    ? 'bg-linear-to-r from-yellow-500 to-yellow-400 text-slate-900 shadow-lg scale-105'
                     : 'border-2 border-slate-700 text-gray-300 hover:border-yellow-500 hover:text-yellow-400'
                 }
               `}
@@ -112,7 +126,7 @@ function CategorySection() {
               className="group relative rounded-3xl overflow-hidden cursor-pointer"
             >
               {/* Card Container with Hover Effect */}
-              <div className="relative h-80 bg-gradient-to-br from-slate-800 to-slate-700 overflow-hidden rounded-3xl">
+              <div className="relative h-80 overflow-hidden rounded-3xl bg-linear-to-br from-slate-800 to-slate-700">
                 {/* Background Image/Color */}
                 <div
                   className="absolute inset-0 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-1"
@@ -123,12 +137,12 @@ function CategorySection() {
                       absolute inset-0 transition-all duration-500
                       ${
                         product.id === 1
-                          ? 'bg-gradient-to-br from-green-600 to-slate-800'
+                          ? 'bg-linear-to-br from-green-600 to-slate-800'
                           : product.id === 2
-                          ? 'bg-gradient-to-br from-blue-600 to-slate-800'
+                          ? 'bg-linear-to-br from-blue-600 to-slate-800'
                           : product.id === 3
-                          ? 'bg-gradient-to-br from-yellow-500 to-slate-800'
-                          : 'bg-gradient-to-br from-amber-600 to-slate-800'
+                          ? 'bg-linear-to-br from-yellow-500 to-slate-800'
+                          : 'bg-linear-to-br from-amber-600 to-slate-800'
                       }
                     `}
                   />
@@ -155,13 +169,13 @@ function CategorySection() {
                 </div>
 
                 {/* Content - Appears on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                <div className="absolute inset-0 flex flex-col justify-end bg-linear-to-t from-black/80 via-transparent to-transparent p-6 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                   <h3 className="text-2xl font-bold text-white mb-2">{product.title}</h3>
                   <p className="text-gray-300 text-sm">{product.count}</p>
                 </div>
 
                 {/* Bottom Content - Always Visible */}
-                <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/60 to-transparent transition-all duration-500 group-hover:translate-y-2">
+                <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/60 to-transparent p-6 transition-all duration-500 group-hover:translate-y-2">
                   <h3 className="text-xl font-bold text-white group-hover:opacity-0 transition-opacity duration-500">
                     {product.title}
                   </h3>

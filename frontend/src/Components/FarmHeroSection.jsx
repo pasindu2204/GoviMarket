@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { LanguageContext } from '../context/LanguageContext.jsx'
-import { t } from '../i18n/translations.js'
 
 function FarmHeroSection() {
   const { language } = useContext(LanguageContext)
@@ -22,6 +21,8 @@ function FarmHeroSection() {
       farmersLabel: 'Farmers',
       districts: '25',
       districtsLabel: 'Districts',
+      imageTitle: '🥬 Fresh Farm Products',
+      imageSubtitle: '[Image will be added here]',
     },
     Tm: {
       badge: 'இலங்கையின் #1 விவசாய சந்தை',
@@ -39,6 +40,8 @@ function FarmHeroSection() {
       farmersLabel: 'விவசாயிகள்',
       districts: '25',
       districtsLabel: 'மாவட்டங்கள்',
+      imageTitle: '🥬 புதிய விவசாய பொருட்கள்',
+      imageSubtitle: '[படம் இங்கே சேர்க்கப்படும்]',
     },
     Si: {
       badge: 'ශ්‍රී ලංකාවේ #1 ගොවි වෙළඳ පොළ',
@@ -56,13 +59,15 @@ function FarmHeroSection() {
       farmersLabel: 'ගොවීන්',
       districts: '25',
       districtsLabel: 'දිස්ත්‍රික්ක',
+      imageTitle: '🥬 නැවුම් ගොවි නිෂ්පාදන',
+      imageSubtitle: '[රූපය මෙහි එක් කරනු ඇත]',
     },
   }
 
   const currentContent = content[language] || content.En
 
   return (
-    <section className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 py-16 px-6 md:px-12">
+    <section className="bg-linear-to-b from-slate-900 via-slate-800 to-slate-900 px-6 py-16 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
         <div className="space-y-8">
@@ -119,10 +124,10 @@ function FarmHeroSection() {
 
         {/* Right Side - Image Placeholder */}
         <div className="flex items-center justify-center">
-          <div className="relative w-full aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+          <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl bg-linear-to-br from-green-400 to-green-600">
             <div className="text-center">
-              <p className="text-white text-xl font-semibold">🥬 Fresh Farm Products</p>
-              <p className="text-white text-sm mt-2">[Image will be added here]</p>
+              <p className="text-xl font-semibold text-[#f4efe6]">{currentContent.imageTitle}</p>
+              <p className="mt-2 text-sm text-[#d2cdbc]">{currentContent.imageSubtitle}</p>
             </div>
           </div>
         </div>

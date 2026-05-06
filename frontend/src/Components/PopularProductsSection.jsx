@@ -62,6 +62,7 @@ const productsByLanguage = {
     badge: 'சிறந்த சலுகைகள்',
     title: 'பிரபலமான பொருட்கள்',
     viewAll: 'அனைத்தும் பார்க்க',
+    
     products: [
       {
         name: 'புதிய தக்காளி',
