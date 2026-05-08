@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
 
 const menuItems = ['menu_home', 'menu_shop', 'menu_fresh', 'menu_colombo', 'menu_meals']
@@ -74,9 +75,33 @@ function ProfileIcon({ className = '' }) {
 function Navbar({ cartCount = 0, activeLanguage = 'En', onLanguageChange }) {
   const [searchValue, setSearchValue] = useState('')
   const { language } = useContext(LanguageContext)
+  const location = useLocation()
 
   const handleSubmit = (event) => {
     event.preventDefault()
+  }
+
+  // Determine active menu item based on current route
+  const getActiveMenuClass = (item) => {
+    if (item === 'menu_home' && location.pathname === '/') {
+      return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
+    }
+    if (item === 'menu_shop' && location.pathname === '/shop') {
+      return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
+    }
+    return 'text-(--muted)'
+  }
+
+  // Get navigation path for menu item
+  const getMenuPath = (item) => {
+    switch (item) {
+      case 'menu_home':
+        return '/'
+      case 'menu_shop':
+        return '/shop'
+      default:
+        return '#'
+    }
   }
 
   return (
@@ -169,15 +194,32 @@ function Navbar({ cartCount = 0, activeLanguage = 'En', onLanguageChange }) {
       </div>
 
       <nav className="mt-3.5 flex flex-wrap items-center gap-2.5" aria-label="Primary navigation">
-        {menuItems.map((item) => (
-          <a
-            key={item}
-            href="#"
-            className="rounded-full px-3.5 py-2.5 font-semibold text-(--muted) transition duration-200 hover:-translate-y-px hover:bg-[rgba(255,233,211,0.9)] hover:text-(--text)"
-          >
-            {navbarText(language, item)}
-          </a>
-        ))}
+        {menuItems.map((item) => {
+          const path = getMenuPath(item)
+          const isAnchorLink = path === '#'
+          
+          if (isAnchorLink) {
+            return (
+              <a
+                key={item}
+                href="#"
+                className="rounded-full px-3.5 py-2.5 font-semibold text-(--muted) transition duration-200 hover:-translate-y-px hover:bg-[rgba(255,233,211,0.9)] hover:text-(--text)"
+              >
+                {navbarText(language, item)}
+              </a>
+            )
+          }
+          
+          return (
+            <Link
+              key={item}
+              to={path}
+              className={`rounded-full px-3.5 py-2.5 font-semibold transition duration-200 hover:-translate-y-px hover:bg-[rgba(255,233,211,0.9)] ${getActiveMenuClass(item)}`}
+            >
+              {navbarText(language, item)}
+            </Link>
+          )
+        })}
       </nav>
     </header>
   )

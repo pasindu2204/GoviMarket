@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navbar.jsx'
 import AdvertisementBanner from './Components/AdvertisementBanner.jsx'
 import FarmHeroSection from './Components/FarmHeroSection.jsx'
@@ -7,10 +8,11 @@ import PopularProductsSection from './Components/PopularProductsSection.jsx'
 import OurOffer from './Components/OurOffer.jsx'
 import CustormerComment from './Components/CustormerComment.jsx'
 import Footer from './Components/Footer.jsx'
+import Shop from './Pages/Shop.jsx'
 import { LanguageContext } from './context/LanguageContext.jsx'
 import './App.css'
 
-function App() {
+function HomePage() {
   const [cartCount] = useState(2)
   const { language, changeLanguage } = useContext(LanguageContext)
 
@@ -28,6 +30,20 @@ function App() {
       </main>
       <Footer />
     </div>
+  )
+}
+
+function App() {
+  const [cartCount] = useState(2)
+  const { language, changeLanguage } = useContext(LanguageContext)
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/shop" element={<Shop />} />
+      </Routes>
+    </Router>
   )
 }
 
