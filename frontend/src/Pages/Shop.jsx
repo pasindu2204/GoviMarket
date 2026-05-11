@@ -292,39 +292,27 @@ export default function Shop() {
     setIsLoading(true)
     setLoadError('')
 
-    const apiBase = import.meta.env.VITE_API_BASE_URL
-    const endpointCandidates = [
-      apiBase ? `${apiBase.replace(/\/$/, '')}/api/products` : null,
-      'http://localhost:5000/api/products',
-      'http://127.0.0.1:5000/api/products',
-      '/api/products',
-    ].filter(Boolean)
-
-    for (const endpoint of endpointCandidates) {
-      try {
-        const response = await fetch(endpoint)
-        if (!response.ok) {
-          continue
-        }
-
-        const data = await response.json()
-        const normalizedProducts = Array.isArray(data)
-          ? data
-          : Array.isArray(data?.products)
-            ? data.products
-            : []
-
-        setProducts(normalizedProducts)
-        setIsLoading(false)
-        return
-      } catch {
-        // Try next endpoint candidate.
+    try {
+      const response = await fetch('/api/products')
+      if (!response.ok) {
+        throw new Error('Failed to load products')
       }
-    }
 
-    setProducts([])
-    setLoadError('Unable to load products. Please make sure the backend is running on port 5000.')
-    setIsLoading(false)
+      const data = await response.json()
+      const normalizedProducts = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.products)
+          ? data.products
+          : []
+
+      setProducts(normalizedProducts)
+      setIsLoading(false)
+      return
+    } catch {
+      setProducts([])
+      setLoadError('Unable to load products. Please make sure the backend is running.')
+      setIsLoading(false)
+    }
   }, [])
 
   useEffect(() => {

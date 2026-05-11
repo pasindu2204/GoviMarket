@@ -89,6 +89,12 @@ function Navbar({ cartCount = 0, activeLanguage = 'En', onLanguageChange }) {
     if (item === 'menu_shop' && location.pathname === '/shop') {
       return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
     }
+    if (item === 'menu_fresh' && location.pathname === '/fresh') {
+      return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
+    }
+    if (item === 'menu_colombo' && location.pathname === '/colombo') {
+      return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
+    }
     return 'text-(--muted)'
   }
 
@@ -99,13 +105,17 @@ function Navbar({ cartCount = 0, activeLanguage = 'En', onLanguageChange }) {
         return '/'
       case 'menu_shop':
         return '/shop'
+      case 'menu_fresh':
+        return '/fresh'
+      case 'menu_colombo':
+        return '/colombo'
       default:
         return '#'
     }
   }
 
   return (
-    <header className="sticky top-0 z-20 mx-auto mt-4 max-w-7xl overflow-hidden rounded-[30px] border border-white/70 bg-white/80 px-5 pt-4.5 pb-4 shadow-[0_24px_60px_rgba(89,47,14,0.15)] backdrop-blur-[18px] max-[720px]:mt-0 max-[720px]:rounded-b-3xl max-[720px]:rounded-t-none max-[720px]:px-3.5">
+    <header className="sticky top-0 z-20 mx-auto mt-4 max-w-7xl overflow-hidden rounded-[30px] border border-white/70 bg-white/80 px-5 pt-4.5 pb-4 text-(--text) shadow-[0_24px_60px_rgba(89,47,14,0.15)] backdrop-blur-[18px] max-[720px]:mt-0 max-[720px]:rounded-b-3xl max-[720px]:rounded-t-none max-[720px]:px-3.5">
       <div className="pointer-events-none absolute -top-6 -left-7 h-37.5 w-37.5 rounded-full bg-[rgba(255,201,139,0.42)] blur-md" />
       <div className="pointer-events-none absolute -top-2 -right-4.5 h-30 w-30 rounded-full bg-[rgba(255,154,86,0.22)] blur-md" />
 

@@ -9,6 +9,8 @@ import OurOffer from './Components/OurOffer.jsx'
 import CustormerComment from './Components/CustormerComment.jsx'
 import Footer from './Components/Footer.jsx'
 import Shop from './Pages/Shop.jsx'
+import Fresh from './Pages/Fresh.jsx'
+import ColomboGoods from './Pages/ColomboGoods.jsx'
 import { LanguageContext } from './context/LanguageContext.jsx'
 import './App.css'
 
@@ -42,6 +44,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/fresh" element={<Fresh />} />
+        <Route path="/colombo" element={<ColomboGoods />} />
       </Routes>
     </Router>
   )
