@@ -95,6 +95,9 @@ function Navbar({ cartCount = 0, activeLanguage = 'En', onLanguageChange }) {
     if (item === 'menu_colombo' && location.pathname === '/colombo') {
       return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
     }
+    if (item === 'menu_meals' && location.pathname === '/meals') {
+      return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
+    }
     return 'text-(--muted)'
   }
 
@@ -109,6 +112,8 @@ function Navbar({ cartCount = 0, activeLanguage = 'En', onLanguageChange }) {
         return '/fresh'
       case 'menu_colombo':
         return '/colombo'
+      case 'menu_meals':
+        return '/meals'
       default:
         return '#'
     }
