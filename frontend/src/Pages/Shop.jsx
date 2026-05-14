@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
-import Navbar from '../Components/Navbar.jsx'
 import Footer from '../Components/Footer.jsx'
 import Card from './Card.jsx'
 
@@ -278,14 +278,15 @@ function translateTag(tag, language) {
 
 // Product card rendering moved to ./Card.jsx — use `Card` component in the products grid.
 
-export default function Shop() {
+export default function Shop({ onAddToCart }) {
   const { language, changeLanguage } = useContext(LanguageContext)
+  const [searchParams] = useSearchParams()
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [loadError, setLoadError] = useState('')
   const content = getLocalizedShopContent(language, products)
   const [activeCategory, setActiveCategory] = useState('all')
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '')
   const [sortBy, setSortBy] = useState('popular')
 
   const fetchProducts = useCallback(async () => {
@@ -293,7 +294,7 @@ export default function Shop() {
     setLoadError('')
 
     try {
-      const response = await fetch('/api/products')
+      const response = await fetch('http://localhost:5000/api/products')
       if (!response.ok) {
         throw new Error('Failed to load products')
       }
@@ -337,8 +338,6 @@ export default function Shop() {
 
   return (
     <div className="min-h-screen bg-[#071307]">
-      <Navbar cartCount={0} activeLanguage={language} onLanguageChange={changeLanguage} />
-
       {/* Hero Section */}
       <section className="bg-linear-to-br from-slate-800 via-slate-900 to-[#071307] px-6 py-12 md:py-16 border-b border-yellow-500/20">
         <div className="max-w-7xl mx-auto">
@@ -438,6 +437,7 @@ export default function Shop() {
                     copy={cardCopy[language] || cardCopy.En}
                     showPrice={true}
                     showAddToCart={true}
+                    onAddToCart={onAddToCart}
                   />
                 ))}
               </div>

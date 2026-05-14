@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Card({ product, language = 'En', translateTag = (t) => t, copy = {}, showPrice = true, showAddToCart = true }) {
+export default function Card({ product, language = 'En', translateTag = (t) => t, copy = {}, showPrice = true, showAddToCart = true, onAddToCart }) {
   const numericPrice = parseFloat(String(product?.price || '').replace(/[^\d.]/g, '')) || 0
   const numericOriginalPrice = parseFloat(String(product?.originalPrice || '').replace(/[^\d.]/g, '')) || numericPrice
   const safePrice = product?.price || `Rs. ${numericPrice}`
@@ -13,7 +13,7 @@ export default function Card({ product, language = 'En', translateTag = (t) => t
     : 0
 
   return (
-    <div className="group h-full bg-linear-to-br from-slate-800 to-slate-900 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-700/50 hover:border-yellow-400/50">
+    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-700/50 bg-linear-to-br from-slate-800 to-slate-900 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:border-yellow-400/50 hover:shadow-2xl">
       <div className="relative overflow-hidden bg-slate-900 h-48">
         <img
           src={product.image}
@@ -56,7 +56,7 @@ export default function Card({ product, language = 'En', translateTag = (t) => t
         )}
       </div>
 
-      <div className="p-4 flex flex-col h-full">
+      <div className="flex flex-1 flex-col p-4">
         <p className="text-xs text-slate-400 mb-1">🏘️ {product.farmName}</p>
 
         <h3 className="font-bold text-sm text-[#f2eadf] group-hover:text-yellow-300 transition-colors line-clamp-2 mb-2">
@@ -74,28 +74,48 @@ export default function Card({ product, language = 'En', translateTag = (t) => t
           <span className="text-xs text-slate-400 ml-1">{product.rating} ({product.reviews})</span>
         </div>
 
-        {showPrice && (
-          <div className="mb-4 mt-auto space-y-2">
-            <div className="flex items-baseline justify-between gap-2">
-              <span className="text-xs text-slate-400">{copy?.oneKgPrice || '1kg Price'}</span>
-              <span className="text-2xl font-black text-yellow-400">{safePrice}</span>
-            </div>
-            <div className="flex items-baseline justify-between gap-2">
-              <span className="text-xs text-slate-400">{copy?.discountPrice || 'Discount Price'}</span>
-              <span className="text-sm text-green-400 font-semibold">{safeOriginalPrice}</span>
-            </div>
-            <div className="flex items-center justify-end">
-              <span className="text-xs text-slate-500">{safeUnit}</span>
-            </div>
-          </div>
-        )}
+        <div className="mt-auto space-y-3 pt-3">
+          {showPrice && (
+            <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-3">
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-slate-400">
+                    {copy?.oneKgPrice || '1kg Price'}
+                  </span>
+                  <p className="mt-1 text-2xl font-black text-yellow-400">{safePrice}</p>
+                </div>
+                <div className="text-right">
+                  <span className="block text-[0.7rem] uppercase tracking-[0.16em] text-slate-400">
+                    {copy?.discountPrice || 'Discount Price'}
+                  </span>
+                  <p className="mt-1 text-sm font-semibold text-emerald-400 line-through decoration-emerald-400/60">
+                    {safeOriginalPrice}
+                  </p>
+                </div>
+              </div>
 
-        {showAddToCart && (
-          <button className="w-full bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-slate-900 font-bold py-2.5 px-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-yellow-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            disabled={!isInStock}>
-            {isInStock ? '➕' : '✗'} {isInStock ? (copy?.addToCart || 'Add to Cart') : (copy?.outOfStock || 'Out of Stock')}
-          </button>
-        )}
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <span className="text-xs text-slate-500">{safeUnit}</span>
+                {discount > 0 && (
+                  <span className="rounded-full bg-red-500/90 px-2.5 py-1 text-xs font-black text-white">
+                    -{discount}%
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {showAddToCart && (
+            <button
+              onClick={() => onAddToCart?.(product)}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-yellow-500 to-yellow-600 px-3 py-3 font-bold text-slate-900 shadow-lg transition-all duration-300 hover:from-yellow-400 hover:to-yellow-500 hover:shadow-yellow-500/50 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={!isInStock}
+            >
+              {isInStock ? '➕' : '✗'}
+              <span>{isInStock ? (copy?.addToCart || 'Add to Cart') : (copy?.outOfStock || 'Out of Stock')}</span>
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )

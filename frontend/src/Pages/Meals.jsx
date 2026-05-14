@@ -1,5 +1,4 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
-import Navbar from '../Components/Navbar.jsx'
 import Footer from '../Components/Footer.jsx'
 import Card from './Card.jsx'
 import { LanguageContext } from '../context/LanguageContext.jsx'
@@ -99,7 +98,7 @@ function isTraditionalMeal(product) {
 	return mealProductNames.includes(product.name) || Array.isArray(product.tags) && product.tags.includes('Traditional')
 }
 
-export default function Meals() {
+export default function Meals({ onAddToCart }) {
 	const { language, changeLanguage } = useContext(LanguageContext)
 	const [products, setProducts] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
@@ -115,7 +114,7 @@ export default function Meals() {
 			setLoadError('')
 
 			try {
-				const response = await fetch('/api/products')
+				const response = await fetch('http://localhost:5000/api/products')
 
 				if (!response.ok) {
 					throw new Error('Failed to load products')
@@ -181,8 +180,6 @@ export default function Meals() {
 
 	return (
 		<div className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(120,198,122,0.18),transparent_30%),linear-gradient(180deg,#061309_0%,#0b1a0d_45%,#061009_100%)] text-[#f4efe6]">
-			<Navbar cartCount={0} activeLanguage={language} onLanguageChange={changeLanguage} />
-
 			<main className="mx-auto max-w-7xl px-4 pb-16 pt-6 sm:px-6 lg:px-8">
 				<section className="relative overflow-hidden rounded-4xl border border-emerald-400/15 bg-[linear-gradient(135deg,rgba(14,32,16,0.94),rgba(8,22,11,0.9))] px-6 py-10 shadow-[0_30px_90px_rgba(0,0,0,0.35)] sm:px-8 lg:px-12 lg:py-14">
 					<div className="pointer-events-none absolute -left-10 top-0 h-44 w-44 rounded-full bg-emerald-400/15 blur-3xl" />
@@ -283,6 +280,7 @@ export default function Meals() {
 										language={language}
 										translateTag={(tag) => tag}
 										copy={cardCopy[language] || cardCopy.En}
+										onAddToCart={onAddToCart}
 									/>
 								))}
 							</div>

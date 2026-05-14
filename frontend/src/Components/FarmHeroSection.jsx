@@ -1,12 +1,14 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
 
 function FarmHeroSection() {
   const { language } = useContext(LanguageContext)
+  const navigate = useNavigate()
 
   const content = {
     En: {
-      badge: "Sri Lanka's #1 Farm Marketplace",
+      badge: "Sri Lanka's No 01 Farm Marketplace",
       fresh: 'Fresh',
       title: 'Farm Products',
       subtitle: 'Delivered to Your Door',
@@ -33,9 +35,9 @@ function FarmHeroSection() {
       shopNow: 'இப்போது வாங்குங்கள்',
       freshProducts: 'புதிய பொருட்கள்',
       customers: '50,000+',
-      customersLabel: 'வாடிக்கையாளர்கள்',
+      customersLabel: 'கணக்குகள்',
       products: '2,800+',
-      productsLabel: 'பொருட்கள்',
+      productsLabel: 'தயாரிப்புகள்',
       farmers: '1,200+',
       farmersLabel: 'விவசாயிகள்',
       districts: '25',
@@ -44,13 +46,13 @@ function FarmHeroSection() {
       imageSubtitle: '[படம் இங்கே சேர்க்கப்படும்]',
     },
     Si: {
-      badge: 'ශ්‍රී ලංකාවේ #1 ගොවි වෙළඳ පොළ',
-      fresh: 'ताজा',
+      badge: 'ශ්‍රී ලංකාවේ අංක 01 ගොවි වෙළඳ පොළ',
+      fresh: 'නැවුම්',
       title: 'ගොවි නිෂ්පාදන',
-      subtitle: 'ඔබගේ දොරට පෙරadelaide එව්ව',
-      description: 'ගොවීන්ගෙන් සෘජුවම — එළවළු, පළතුරු, ධාන්ය, මසු, කිරීම, කොළඹ භාණ්ඩ සහ තවත් බොහෝ — හොඳම ధර, දුපුටෙ පුරා ව්‍යාපනය!',
+      subtitle: 'ඔබේ දොරකඩටම ගෙනැවිත් භාරදීම',
+      description: 'ගොවීන්ගෙන් සෘජුවම — එළවළු, පලතුරු, ධාන්‍ය වර්ග, මාළු, කිරි නිෂ්පාදන, කොළඹ භාණ්ඩ සහ තවත් දේ — හොඳම මිල ගණන්, දිවයින පුරා බෙදා හැරීම!',
       shopNow: 'දැන් මිල දී ගන්න',
-      freshProducts: 'ताजा නිෂ්පාදන',
+      freshProducts: 'නැවුම් නිෂ්පාදන',
       customers: '50,000+',
       customersLabel: 'ගිණුම්',
       products: '2,800+',
@@ -93,10 +95,18 @@ function FarmHeroSection() {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold py-3 px-8 rounded-full flex items-center justify-center gap-2 transition-colors">
+            <button
+              type="button"
+              onClick={() => navigate('/shop')}
+              className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold py-3 px-8 rounded-full flex items-center justify-center gap-2 transition-colors"
+            >
               📦 {currentContent.shopNow}
             </button>
-            <button className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-slate-900 font-semibold py-3 px-8 rounded-full flex items-center justify-center gap-2 transition-colors">
+            <button
+              type="button"
+              onClick={() => navigate('/fresh')}
+              className="border-2 border-green-400 text-green-400 hover:bg-green-400 hover:text-slate-900 font-semibold py-3 px-8 rounded-full flex items-center justify-center gap-2 transition-colors"
+            >
               🌿 {currentContent.freshProducts}
             </button>
           </div>

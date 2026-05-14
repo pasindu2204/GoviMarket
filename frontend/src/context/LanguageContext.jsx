@@ -3,7 +3,7 @@ import { createContext, useState, useCallback, useContext as useReactContext } f
 export const LanguageContext = createContext()
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState('En')
+  const [language, setLanguage] = useState('Si')
 
   const changeLanguage = useCallback((newLanguage) => {
     setLanguage(newLanguage)
