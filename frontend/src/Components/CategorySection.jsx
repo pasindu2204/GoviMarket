@@ -27,11 +27,11 @@ function CategorySection() {
     Si: [
       { id: 'all', label: 'සියල්ල', icon: '⭐', count: '2800+' },
       { id: 'vegetables', label: 'එළවළු', icon: '🥒', count: '340+' },
-      { id: 'fruits', label: 'පළතුරු', icon: '🍎', count: '280+' },
-      { id: 'fish', label: 'මසු/වියළි මසු', icon: '🐟', count: '120+' },
-      { id: 'grains', label: 'ධාන්ය/බත්', icon: '🌾', count: '95+' },
-      { id: 'dairy', label: 'කිරීම/දධි', icon: '🥛', count: '60+' },
-      { id: 'honey', label: 'පැණි/කිතුල්', icon: '🍯', count: '40+' },
+      { id: 'fruits', label: 'පලතුරු', icon: '🍎', count: '280+' },
+      { id: 'fish', label: 'මාළු/කරවල', icon: '🐟', count: '120+' },
+      { id: 'grains', label: 'ධාන්ය/සහල්', icon: '🌾', count: '95+' },
+      { id: 'dairy', label: 'කිරි/සීනි', icon: '🥛', count: '60+' },
+      { id: 'honey', label: 'මී පැණි/කිතුල්', icon: '🍯', count: '40+' },
     ],
   }
 
@@ -39,7 +39,7 @@ function CategorySection() {
     En: {
       all: [
         { id: 1, title: 'Vegetables', count: '340+ types', image: '🥬', badge: 'Fresh' },
-        { id: 2, title: 'Fish & Dry Fish', count: '120+ types', image: '🐟', badge: 'සුවඳ' },
+        { id: 2, title: 'Fish & Dry Fish', count: '120+ types', image: '🍊', badge: 'සුවඳ' },
         { id: 3, title: 'Fruits', count: '280+ types', image: '🍊', badge: '' },
         { id: 4, title: 'Honey & Kithul', count: '40+ types', image: '🍯', badge: '100% Natural' },
       ],
@@ -50,7 +50,7 @@ function CategorySection() {
         { id: 3, title: 'Fruits', count: '280+ types', image: '🍊', badge: '' },
       ],
       fish: [
-        { id: 2, title: 'Fish & Dry Fish', count: '120+ types', image: '🐟', badge: 'සුවඳ' },
+        { id: 2, title: 'Fish & Dry Fish', count: '120+ types', image: '🐟', badge: '' },
       ],
       honey: [
         { id: 4, title: 'Honey & Kithul', count: '40+ types', image: '🍯', badge: '100% Natural' },
@@ -66,22 +66,22 @@ function CategorySection() {
     },
     Si: {
       all: [
-        { id: 1, title: 'එළවළු', count: '340+ වර්ගයන්', image: '🥬', badge: 'ताजा' },
-        { id: 2, title: 'මසු සහ වියළි මසු', count: '120+ වර්ගයන්', image: '🐟', badge: 'සුවඳ' },
+        { id: 1, title: 'එළවළු', count: '340+ වර්ගයන්', image: '🥬', badge: 'නැවුම්' },
+        { id: 2, title: 'මාළු/කරවල', count: '120+ වර්ගයන්', image: '🐟', badge: 'කරවල' },
         { id: 3, title: 'පළතුරු', count: '280+ වර්ගයන්', image: '🍊', badge: '' },
-        { id: 4, title: 'පැණි සහ කිතුල්', count: '40+ වර්ගයන්', image: '🍯', badge: '100% ස්වාභාවික' },
+        { id: 4, title: 'මී පැණි/කිතුල්', count: '40+ වර්ගයන්', image: '🍯', badge: '100% ස්වාභාවික' },
       ],
       vegetables: [
-        { id: 1, title: 'එළවළු', count: '340+ වර්ගයන්', image: '🥬', badge: 'ताजा' },
+        { id: 1, title: 'එළවළු', count: '340+ වර්ගයන්', image: '🥬', badge: 'නැවුම්' },
       ],
       fruits: [
         { id: 3, title: 'පළතුරු', count: '280+ වර්ගයන්', image: '🍊', badge: '' },
       ],
       fish: [
-        { id: 2, title: 'මසු සහ වියළි මසු', count: '120+ වර්ගයන්', image: '🐟', badge: 'සුවඳ' },
+        { id: 2, title: 'මාළු/කරවල', count: '120+ වර්ගයන්', image: '🐟', badge: 'කරවල' },
       ],
       honey: [
-        { id: 4, title: 'පැණි සහ කිතුල්', count: '40+ වර්ගයන්', image: '🍯', badge: '100% ස්වාභාවික' },
+        { id: 4, title: 'මී පැණි/කිතුල්', count: '40+ වර්ගයන්', image: '🍯', badge: '100% ස්වාභාවික' },
       ],
     },
   }

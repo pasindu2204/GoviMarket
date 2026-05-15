@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
+import HeroImage from '../assets/Hero.jpg'
 
 function FarmHeroSection() {
   const { language } = useContext(LanguageContext)
@@ -24,7 +25,7 @@ function FarmHeroSection() {
       districts: '25',
       districtsLabel: 'Districts',
       imageTitle: '🥬 Fresh Farm Products',
-      imageSubtitle: '[Image will be added here]',
+      imageSubtitle: 'Very cheap price',
     },
     Tm: {
       badge: 'இலங்கையின் #1 விவசாய சந்தை',
@@ -43,13 +44,13 @@ function FarmHeroSection() {
       districts: '25',
       districtsLabel: 'மாவட்டங்கள்',
       imageTitle: '🥬 புதிய விவசாய பொருட்கள்',
-      imageSubtitle: '[படம் இங்கே சேர்க்கப்படும்]',
+      imageSubtitle: 'மிகவும் மலிவான விலை',
     },
     Si: {
       badge: 'ශ්‍රී ලංකාවේ අංක 01 ගොවි වෙළඳ පොළ',
       fresh: 'නැවුම්',
       title: 'ගොවි නිෂ්පාදන',
-      subtitle: 'ඔබේ දොරකඩටම ගෙනැවිත් භාරදීම',
+      subtitle: 'ඔබේ දොරකඩටම',
       description: 'ගොවීන්ගෙන් සෘජුවම — එළවළු, පලතුරු, ධාන්‍ය වර්ග, මාළු, කිරි නිෂ්පාදන, කොළඹ භාණ්ඩ සහ තවත් දේ — හොඳම මිල ගණන්, දිවයින පුරා බෙදා හැරීම!',
       shopNow: 'දැන් මිල දී ගන්න',
       freshProducts: 'නැවුම් නිෂ්පාදන',
@@ -62,7 +63,7 @@ function FarmHeroSection() {
       districts: '25',
       districtsLabel: 'දිස්ත්‍රික්ක',
       imageTitle: '🥬 නැවුම් ගොවි නිෂ්පාදන',
-      imageSubtitle: '[රූපය මෙහි එක් කරනු ඇත]',
+      imageSubtitle: 'ඉතා ලාභ මිලට',
     },
   }
 
@@ -135,7 +136,13 @@ function FarmHeroSection() {
         {/* Right Side - Image Placeholder */}
         <div className="flex items-center justify-center">
           <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden rounded-3xl bg-linear-to-br from-green-400 to-green-600">
-            <div className="text-center">
+            <img
+              src={HeroImage}
+              alt="Fresh farm produce"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-slate-950/55 via-transparent to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
               <p className="text-xl font-semibold text-[#f4efe6]">{currentContent.imageTitle}</p>
               <p className="mt-2 text-sm text-[#d2cdbc]">{currentContent.imageSubtitle}</p>
             </div>

@@ -11,7 +11,7 @@ const productsByLanguage = {
         name: 'Fresh Tomatoes',
         price: 'Rs. 180',
         image:
-          'https://images.unsplash.com/photo-1546470427-2276097c63c7?auto=format&fit=crop&w=900&q=80',
+          './assets/P_tomato.jpg',
         highlight: 'Fresh',
       },
       {
