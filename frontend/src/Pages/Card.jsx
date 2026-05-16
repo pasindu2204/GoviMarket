@@ -1,6 +1,8 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Card({ product, language = 'En', translateTag = (t) => t, copy = {}, showPrice = true, showAddToCart = true, onAddToCart }) {
+  const navigate = useNavigate()
   const numericPrice = parseFloat(String(product?.price || '').replace(/[^\d.]/g, '')) || 0
   const numericOriginalPrice = parseFloat(String(product?.originalPrice || '').replace(/[^\d.]/g, '')) || numericPrice
   const safePrice = product?.price || `Rs. ${numericPrice}`
@@ -12,8 +14,29 @@ export default function Card({ product, language = 'En', translateTag = (t) => t
     ? Math.round(((numericOriginalPrice - numericPrice) / numericOriginalPrice) * 100)
     : 0
 
+  const handleOpenDetails = () => {
+    if (!product) {
+      return
+    }
+
+    navigate(`/fooddetails/${product.id ?? encodeURIComponent(product.name)}`, {
+      state: { product },
+    })
+  }
+
   return (
-    <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-700/50 bg-linear-to-br from-slate-800 to-slate-900 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:border-yellow-400/50 hover:shadow-2xl">
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleOpenDetails}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          handleOpenDetails()
+        }
+      }}
+      className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-700/50 bg-linear-to-br from-slate-800 to-slate-900 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:border-yellow-400/50 hover:shadow-2xl"
+    >
       <div className="relative overflow-hidden bg-slate-900 h-48">
         <img
           src={product.image}
@@ -107,7 +130,10 @@ export default function Card({ product, language = 'En', translateTag = (t) => t
 
           {showAddToCart && (
             <button
-              onClick={() => onAddToCart?.(product)}
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onAddToCart?.(product)
+                }}
               className="flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-yellow-500 to-yellow-600 px-3 py-3 font-bold text-slate-900 shadow-lg transition-all duration-300 hover:from-yellow-400 hover:to-yellow-500 hover:shadow-yellow-500/50 disabled:cursor-not-allowed disabled:opacity-50"
               disabled={!isInStock}
             >

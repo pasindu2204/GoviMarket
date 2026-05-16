@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
 
 const productsByLanguage = {
@@ -124,7 +125,7 @@ const productsByLanguage = {
         name: 'නැවුම් තක්කාලි',
         price: 'රු. 180',
         image:
-          'https://images.unsplash.com/photo-1546470427-2276097c63c7?auto=format&fit=crop&w=900&q=80',
+          'https://www.pexels.com/photo/fresh-red-tomatoes-on-vine-at-market-34993617/',
         highlight: 'නැවුම්',
       },
       {
@@ -175,7 +176,14 @@ const productsByLanguage = {
 
 function PopularProductsSection() {
   const { language } = useContext(LanguageContext)
+  const navigate = useNavigate()
   const content = productsByLanguage[language] || productsByLanguage.En
+
+  const openDetails = (product, index) => {
+    navigate(`/fooddetails/popular-${index + 1}`, {
+      state: { product: { ...product, id: `popular-${index + 1}` } },
+    })
+  }
 
   return (
     <section className="bg-[#071307] px-6 py-16 md:px-10 lg:px-12">
@@ -199,7 +207,16 @@ function PopularProductsSection() {
             {content.products.map((product, index) => (
               <article
                 key={`${product.name}-${index}`}
-                className="group relative w-60 overflow-hidden rounded-3xl border border-yellow-500/15 bg-[#123012] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1"
+                role="button"
+                tabIndex={0}
+                onClick={() => openDetails(product, index)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    openDetails(product, index)
+                  }
+                }}
+                className="group relative w-60 cursor-pointer overflow-hidden rounded-3xl border border-yellow-500/15 bg-[#123012] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1"
               >
                 <div className="relative h-62.5 overflow-hidden bg-[#f3efe6]">
                   <img
@@ -221,7 +238,14 @@ function PopularProductsSection() {
                     <p className="mt-2 text-sm font-semibold text-yellow-400">{product.price}</p>
                   </div>
 
-                  <button className="grid h-10 w-10 place-items-center rounded-xl bg-yellow-400 text-lg font-black text-[#111] transition duration-300 group-hover:scale-105 group-hover:bg-yellow-300">
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      openDetails(product, index)
+                    }}
+                    className="grid h-10 w-10 place-items-center rounded-xl bg-yellow-400 text-lg font-black text-[#111] transition duration-300 group-hover:scale-105 group-hover:bg-yellow-300"
+                  >
                     +
                   </button>
                 </div>

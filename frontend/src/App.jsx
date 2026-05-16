@@ -14,6 +14,7 @@ import Fresh from './Pages/Fresh.jsx'
 import ColomboGoods from './Pages/ColomboGoods.jsx'
 import Meals from './Pages/Meals.jsx'
 import Checkout from './Pages/Checkout.jsx'
+import Fooddetails from './Pages/Fooddetails.jsx'
 import { LanguageContext } from './context/LanguageContext.jsx'
 import './App.css'
 
@@ -120,6 +121,14 @@ function App() {
           element={
             <AppLayout cartItems={cartItems} onUpdateCart={handleUpdateCart}>
               <Meals onAddToCart={handleAddToCart} />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/fooddetails/:productId"
+          element={
+            <AppLayout cartItems={cartItems} onUpdateCart={handleUpdateCart}>
+              <Fooddetails onAddToCart={handleAddToCart} />
             </AppLayout>
           }
         />
