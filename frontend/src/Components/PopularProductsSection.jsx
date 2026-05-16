@@ -1,5 +1,4 @@
-import { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
 import { LanguageContext } from '../context/LanguageContext.jsx'
 
 const productsByLanguage = {
@@ -11,8 +10,7 @@ const productsByLanguage = {
       {
         name: 'Fresh Tomatoes',
         price: 'Rs. 180',
-        image:
-          './assets/P_tomato.jpg',
+        image: 'https://plus.unsplash.com/premium_photo-1661811820259-2575b82101bf?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D ',
         highlight: 'Fresh',
       },
       {
@@ -33,28 +31,28 @@ const productsByLanguage = {
         name: 'Rambutan',
         price: 'Rs. 350',
         image:
-          'https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&w=900&q=80',
+          'https://plus.unsplash.com/premium_photo-1725623971827-5cd7b970fb09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         highlight: '',
       },
       {
-        name: 'Fresh Tuna (Thalapath)',
+        name: 'Fresh Tuna',
         price: 'Rs. 850',
         image:
-          'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1648431529663-8ae9606630c0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVuYSUyMGZpc2h8ZW58MHx8MHx8fDA%3D',
         highlight: '',
       },
       {
-        name: 'Dry Fish (Kala Karawala)',
+        name: 'Dry Fish',
         price: 'Rs. 1,200',
         image:
           'https://images.unsplash.com/photo-1510130387422-82bed34b37e9?auto=format&fit=crop&w=900&q=80',
         highlight: '',
       },
       {
-        name: 'Haal Messo',
+        name: 'Dry Fish (Hall Messso)',
         price: 'Rs. 950',
         image:
-          'https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&w=900&q=80',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQ8A0Yffv6kQjauOGvLzLl-izgiHFBwX8_A&s',
         highlight: '',
       },
     ],
@@ -69,7 +67,7 @@ const productsByLanguage = {
         name: 'புதிய தக்காளி',
         price: 'ரூ. 180',
         image:
-          'https://images.unsplash.com/photo-1546470427-2276097c63c7?auto=format&fit=crop&w=900&q=80',
+          'https://plus.unsplash.com/premium_photo-1661811820259-2575b82101bf?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         highlight: 'புதிய',
       },
       {
@@ -90,14 +88,14 @@ const productsByLanguage = {
         name: 'ரம்புட்டான்',
         price: 'ரூ. 350',
         image:
-          'https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&w=900&q=80',
+          'https://plus.unsplash.com/premium_photo-1725623971827-5cd7b970fb09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         highlight: '',
       },
       {
         name: 'புதிய தூனா (தலபத்)',
         price: 'ரூ. 850',
         image:
-          'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1648431529663-8ae9606630c0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVuYSUyMGZpc2h8ZW58MHx8MHx8fDA%3D',
         highlight: '',
       },
       {
@@ -111,7 +109,7 @@ const productsByLanguage = {
         name: 'ஹால் மெஸ்ஸோ',
         price: 'ரூ. 950',
         image:
-          'https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&w=900&q=80',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQ8A0Yffv6kQjauOGvLzLl-izgiHFBwX8_A&s',
         highlight: '',
       },
     ],
@@ -125,49 +123,49 @@ const productsByLanguage = {
         name: 'නැවුම් තක්කාලි',
         price: 'රු. 180',
         image:
-          'https://www.pexels.com/photo/fresh-red-tomatoes-on-vine-at-market-34993617/',
+          'https://plus.unsplash.com/premium_photo-1661811820259-2575b82101bf?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         highlight: 'නැවුම්',
       },
       {
-        name: 'වතුරමැල්ල',
+        name: 'කොමඩු ',
         price: 'රු. 180',
         image:
           'https://images.unsplash.com/photo-1563114773-84221bd62daa?auto=format&fit=crop&w=900&q=80',
         highlight: '',
       },
       {
-        name: 'කෙසෙල් (අම්බුල්)',
+        name: 'කෙසෙල් (ඇම්බුල්)',
         price: 'රු. 120',
         image:
           'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=900&q=80',
         highlight: '',
       },
       {
-        name: 'රැම්බුටාන්',
+        name: 'රඹුටන් ',
         price: 'රු. 350',
         image:
-          'https://images.unsplash.com/photo-1591073113125-e46713c829ed?auto=format&fit=crop&w=900&q=80',
+          'https://plus.unsplash.com/premium_photo-1725623971827-5cd7b970fb09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         highlight: '',
       },
       {
         name: 'නැවුම් ටුනා (තලපත්)',
         price: 'රු. 850',
         image:
-          'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80',
+          'https://images.unsplash.com/photo-1648431529663-8ae9606630c0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dHVuYSUyMGZpc2h8ZW58MHx8MHx8fDA%3D',
         highlight: '',
       },
       {
-        name: 'වියළි මසු',
+        name: 'වියළි මසුන්',
         price: 'රු. 1,200',
         image:
           'https://images.unsplash.com/photo-1510130387422-82bed34b37e9?auto=format&fit=crop&w=900&q=80',
         highlight: '',
       },
       {
-        name: 'හාල් මෙසෝ',
+        name: 'හාල් මැස්සෝ',
         price: 'රු. 950',
         image:
-          'https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&w=900&q=80',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUQ8A0Yffv6kQjauOGvLzLl-izgiHFBwX8_A&s',
         highlight: '',
       },
     ],
@@ -176,14 +174,38 @@ const productsByLanguage = {
 
 function PopularProductsSection() {
   const { language } = useContext(LanguageContext)
-  const navigate = useNavigate()
   const content = productsByLanguage[language] || productsByLanguage.En
+  
 
-  const openDetails = (product, index) => {
-    navigate(`/fooddetails/popular-${index + 1}`, {
-      state: { product: { ...product, id: `popular-${index + 1}` } },
-    })
-  }
+// const [fetchedProducts, setFetchedProducts] = useState([])
+
+//   useEffect(() => {
+//     const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
+//     async function load() {
+//       try {
+//         const res = await fetch(`${API_BASE}/api/products`)
+//         if (!res.ok) throw new Error(`Status ${res.status}`)
+//         const data = await res.json()
+//         setFetchedProducts(Array.isArray(data) ? data : [])
+//       } catch (err) {
+//         console.warn('Could not fetch products:', err.message)
+//       }
+//     }
+
+//     load()
+//   }, [])
+
+//   const productsToShow = (fetchedProducts && fetchedProducts.length > 0)
+//     ? fetchedProducts.slice(0, 7).map((p) => ({
+//         name: p.name,
+//         price: p.price,
+//         image: p.image,
+//         highlight: p.badge || p.highlight || '',
+//       }))
+//     : content.products
+
+
 
   return (
     <section className="bg-[#071307] px-6 py-16 md:px-10 lg:px-12">
@@ -207,16 +229,7 @@ function PopularProductsSection() {
             {content.products.map((product, index) => (
               <article
                 key={`${product.name}-${index}`}
-                role="button"
-                tabIndex={0}
-                onClick={() => openDetails(product, index)}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter' || event.key === ' ') {
-                    event.preventDefault()
-                    openDetails(product, index)
-                  }
-                }}
-                className="group relative w-60 cursor-pointer overflow-hidden rounded-3xl border border-yellow-500/15 bg-[#123012] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1"
+                className="group relative w-60 overflow-hidden rounded-3xl border border-yellow-500/15 bg-[#123012] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1"
               >
                 <div className="relative h-62.5 overflow-hidden bg-[#f3efe6]">
                   <img
@@ -238,14 +251,7 @@ function PopularProductsSection() {
                     <p className="mt-2 text-sm font-semibold text-yellow-400">{product.price}</p>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      openDetails(product, index)
-                    }}
-                    className="grid h-10 w-10 place-items-center rounded-xl bg-yellow-400 text-lg font-black text-[#111] transition duration-300 group-hover:scale-105 group-hover:bg-yellow-300"
-                  >
+                  <button className="grid h-10 w-10 place-items-center rounded-xl bg-yellow-400 text-lg font-black text-[#111] transition duration-300 group-hover:scale-105 group-hover:bg-yellow-300">
                     +
                   </button>
                 </div>
