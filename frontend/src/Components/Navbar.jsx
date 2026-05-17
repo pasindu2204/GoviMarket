@@ -170,6 +170,7 @@ function Navbar({ activeLanguage = 'En', onLanguageChange, cartItems = [], onUpd
 
           <button
             type="button"
+            onClick={() => navigate('/signin')}
             className="inline-flex h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border 
             border-(--border) bg-white/80 p-0 text-(--text)"
             aria-label="Open profile"
