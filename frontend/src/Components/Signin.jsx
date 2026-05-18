@@ -101,24 +101,115 @@ const signinCopy = {
 	},
 }
 
-function InputField({ label, type = 'text', placeholder }) {
+function InputField({ label, type = 'text', placeholder, name, value, onChange }) {
 	return (
 		<label className="grid gap-2">
 			<span className="text-sm font-semibold text-slate-700">{label}</span>
 			<input
+				name={name}
 				type={type}
 				placeholder={placeholder}
+				value={value}
+				onChange={onChange}
 				className="w-full rounded-2xl border border-orange-200 bg-white/90 px-4 py-3 text-slate-900 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
 			/>
 		</label>
 	)
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
 function Signin() {
 	const { language } = useContext(LanguageContext)
 	const [mode, setMode] = useState('register')
+	const [formData, setFormData] = useState({
+		fullName: '',
+		email: '',
+		password: '',
+		confirmPassword: '',
+	})
+	const [message, setMessage] = useState('')
+	const [messageType, setMessageType] = useState('')
+	const [isSubmitting, setIsSubmitting] = useState(false)
 	const copy = signinCopy[language] || signinCopy.En
 	const isRegisterMode = mode === 'register'
+
+	function handleChange(event) {
+		const { name, value } = event.target
+		setFormData((currentForm) => ({
+			...currentForm,
+			[name]: value,
+		}))
+	}
+
+	async function handleSubmit(event) {
+		event.preventDefault()
+		setIsSubmitting(true)
+		setMessage('')
+		setMessageType('')
+
+		const endpoint = isRegisterMode ? '/api/profile/register' : '/api/profile/login'
+		const payload = isRegisterMode
+			? {
+				fullName: formData.fullName,
+				email: formData.email,
+				password: formData.password,
+				confirmPassword: formData.confirmPassword,
+			}
+			: {
+				email: formData.email,
+				password: formData.password,
+			}
+
+		try {
+			const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(payload),
+			})
+
+			const contentType = response.headers.get('content-type') || ''
+			let data
+
+			if (contentType.includes('application/json')) {
+				data = await response.json()
+			} else {
+				const text = await response.text()
+				// Surface the raw response to help debug HTML/404 returns
+				throw new Error(`Unexpected non-JSON response: ${text.slice(0, 1000)}`)
+			}
+
+			if (!response.ok) {
+				throw new Error(data.message || 'Something went wrong.')
+			}
+
+			setMessage(data.message || 'Request completed successfully.')
+			setMessageType('success')
+
+			if (isRegisterMode) {
+				setMode('login')
+			}
+
+			setFormData((currentForm) => ({
+				...currentForm,
+				password: '',
+				confirmPassword: '',
+			}))
+		} catch (error) {
+			setMessage(error.message || 'Unable to submit the form.')
+			setMessageType('error')
+		} finally {
+			setIsSubmitting(false)
+		}
+	}
+
+	function switchMode(nextMode) {
+		setMode(nextMode)
+		setMessage('')
+		setMessageType('')
+	}
 
 	return (
 		<section className="min-h-[calc(100vh-120px)] px-4 py-10 sm:px-6 lg:px-8">
@@ -158,14 +249,14 @@ function Signin() {
 						<div className="inline-flex rounded-full border border-orange-100 bg-orange-50 p-1">
 							<button
 								type="button"
-								onClick={() => setMode('register')}
+								onClick={() => switchMode('register')}
 								className={`rounded-full px-4 py-2 text-sm font-bold transition ${mode === 'register' ? 'bg-[#ea6a1a] text-white shadow-lg shadow-orange-200' : 'text-slate-600'}`}
 							>
 								{copy.registerTab}
 							</button>
 							<button
 								type="button"
-								onClick={() => setMode('login')}
+								onClick={() => switchMode('login')}
 								className={`rounded-full px-4 py-2 text-sm font-bold transition ${mode === 'login' ? 'bg-[#ea6a1a] text-white shadow-lg shadow-orange-200' : 'text-slate-600'}`}
 							>
 								{copy.loginTab}
@@ -181,11 +272,42 @@ function Signin() {
 							</p>
 						</div>
 
-						<form className="mt-8 grid gap-4">
-							{isRegisterMode && <InputField label={copy.fullName} placeholder={copy.fullNamePlaceholder} />}
-							<InputField label={copy.email} type="email" placeholder={copy.emailPlaceholder} />
-							<InputField label={copy.password} type="password" placeholder={copy.passwordPlaceholder} />
-							{isRegisterMode && <InputField label={copy.confirmPassword} type="password" placeholder={copy.passwordPlaceholder} />}
+						<form className="mt-8 grid gap-4" onSubmit={handleSubmit}>
+							{isRegisterMode && (
+								<InputField
+									label={copy.fullName}
+									name="fullName"
+									placeholder={copy.fullNamePlaceholder}
+									value={formData.fullName}
+									onChange={handleChange}
+								/>
+							)}
+							<InputField
+								label={copy.email}
+								name="email"
+								type="email"
+								placeholder={copy.emailPlaceholder}
+								value={formData.email}
+								onChange={handleChange}
+							/>
+							<InputField
+								label={copy.password}
+								name="password"
+								type="password"
+								placeholder={copy.passwordPlaceholder}
+								value={formData.password}
+								onChange={handleChange}
+							/>
+							{isRegisterMode && (
+								<InputField
+									label={copy.confirmPassword}
+									name="confirmPassword"
+									type="password"
+									placeholder={copy.passwordPlaceholder}
+									value={formData.confirmPassword}
+									onChange={handleChange}
+								/>
+							)}
 
 							<div className="flex items-center justify-between gap-4 pt-2">
 								<label className="flex items-center gap-2 text-sm text-slate-600">
@@ -199,17 +321,24 @@ function Signin() {
 
 							<button
 								type="submit"
-								className="mt-2 rounded-2xl bg-linear-to-r from-[#ea6a1a] to-[#ff8a39] px-5 py-3.5 text-base font-bold text-white shadow-[0_18px_36px_rgba(234,106,26,0.28)] transition hover:-translate-y-0.5"
+								disabled={isSubmitting}
+								className="mt-2 rounded-2xl bg-linear-to-r from-[#ea6a1a] to-[#ff8a39] px-5 py-3.5 text-base font-bold text-white shadow-[0_18px_36px_rgba(234,106,26,0.28)] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
 							>
-								{isRegisterMode ? copy.submitRegister : copy.submitLogin}
+									{isSubmitting ? 'Please wait...' : isRegisterMode ? copy.submitRegister : copy.submitLogin}
 							</button>
+
+								{message && (
+									<p className={`rounded-2xl px-4 py-3 text-sm font-medium ${messageType === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+										{message}
+									</p>
+								)}
 						</form>
 
 						<p className="mt-6 text-sm text-slate-600">
 							{isRegisterMode ? copy.accountPromptRegister : copy.accountPromptLogin}{' '}
 							<button
 								type="button"
-								onClick={() => setMode(mode === 'register' ? 'login' : 'register')}
+								onClick={() => switchMode(mode === 'register' ? 'login' : 'register')}
 								className="font-bold text-[#ea6a1a] hover:underline"
 							>
 								{isRegisterMode ? copy.toggleToLogin : copy.toggleToRegister}

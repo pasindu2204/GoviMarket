@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const { products } = require('./seed');
 const mongoose = require('mongoose');
+const profileRoutes = require('./routes/profile');
 require('dotenv').config();
 
 const app = express();
@@ -17,6 +18,11 @@ app.get('/api/products', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });
 });
+
+
+// routes
+app.use('/api/profile', profileRoutes);
+
 
 const MONGO_URI = process.env.MONGO_URI;
 
