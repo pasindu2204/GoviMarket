@@ -260,7 +260,7 @@ export default function Fresh({ onAddToCart }) {
 
             <div className="mt-6 space-y-3">
               {spotlightProducts.map((product) => (
-                <div key={product.id} className="flex items-center gap-4 rounded-[22px] border border-white/10 bg-white/6 p-3">
+                <div key={product.id} className="flex items-center gap-2 rounded-[22px] border border-white/10 bg-white/6 p-3">
                   <img
                     src={product.image}
                     alt={product.name}

@@ -4,7 +4,7 @@ import { LanguageContext } from '../context/LanguageContext.jsx'
 import Searchbar from './Searchbar.jsx'
 import Cart from '../Pages/Cart.jsx'
 
-const menuItems = ['menu_home', 'menu_shop', 'menu_fresh', 'menu_colombo', 'menu_meals']
+const menuItems = ['menu_home', 'menu_shop', 'menu_fresh', 'menu_colombo', 'menu_meals', 'menu_contact']
 const languages = [ 'Si', 'En', 'Tm']
 
 const navbarContent = {
@@ -17,6 +17,7 @@ const navbarContent = {
     menu_fresh: 'Fresh',
     menu_colombo: 'Colombo Goods',
     menu_meals: 'Meals',
+    menu_contact: 'Contact Us',
   },
   Tm: {
     brand_kicker: 'ගොවිMarkt',
@@ -27,6 +28,7 @@ const navbarContent = {
     menu_fresh: 'புதியது',
     menu_colombo: 'கொழும்பு பொருட்கள்',
     menu_meals: 'உணவு',
+    menu_contact: 'தொடர்பு கொள்ளவும்',
   },
   Si: {
     brand_kicker: 'ගොවිMarkt',
@@ -37,6 +39,7 @@ const navbarContent = {
     menu_fresh: 'නැවුම්',
     menu_colombo: 'කොළඹ භාණ්ඩ',
     menu_meals: 'ආහාර',
+    menu_contact: 'අප අමතන්න',
   },
 }
 
@@ -81,6 +84,7 @@ function Navbar({ activeLanguage = 'En', onLanguageChange, cartItems = [], onUpd
     if (item === 'menu_fresh' && location.pathname === '/fresh') return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
     if (item === 'menu_colombo' && location.pathname === '/colombo') return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
     if (item === 'menu_meals' && location.pathname === '/meals') return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
+    if (item === 'menu_contact' && location.pathname === '/contact-us') return 'bg-linear-to-br from-(--brand-deep) to-(--brand) text-white'
     return 'text-(--muted)'
   }
 
@@ -96,6 +100,8 @@ function Navbar({ activeLanguage = 'En', onLanguageChange, cartItems = [], onUpd
         return '/colombo'
       case 'menu_meals':
         return '/meals'
+      case 'menu_contact':
+        return '/contact-us'
       default:
         return '#'
     }

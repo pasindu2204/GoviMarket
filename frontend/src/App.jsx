@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './Components/Navbar.jsx'
 import AdvertisementBanner from './Components/AdvertisementBanner.jsx'
@@ -16,8 +16,22 @@ import Meals from './Pages/Meals.jsx'
 import Checkout from './Pages/Checkout.jsx'
 import Fooddetails from './Pages/Fooddetails.jsx'
 import Signin from './Components/Signin.jsx'
+import ContactUs from './Pages/ContactUs.jsx'
 import { LanguageContext } from './context/LanguageContext.jsx'
 import './App.css'
+
+const CART_STORAGE_KEY = 'govimarkt-cart-items'
+
+function loadCartItems() {
+  if (typeof window === 'undefined') return []
+
+  try {
+    const storedItems = window.localStorage.getItem(CART_STORAGE_KEY)
+    return storedItems ? JSON.parse(storedItems) : []
+  } catch {
+    return []
+  }
+}
 
 function HomePage({ cartItems, onUpdateCart }) {
   const { language, changeLanguage } = useContext(LanguageContext)
@@ -52,7 +66,11 @@ function AppLayout({ cartItems, onUpdateCart, children }) {
 }
 
 function App() {
-  const [cartItems, setCartItems] = useState([])
+  const [cartItems, setCartItems] = useState(loadCartItems)
+
+  useEffect(() => {
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems))
+  }, [cartItems])
 
   const handleUpdateCart = (updatedItems) => {
     setCartItems(updatedItems)
@@ -97,7 +115,7 @@ function App() {
           path="/checkout"
           element={
             <AppLayout cartItems={cartItems} onUpdateCart={handleUpdateCart}>
-              <Checkout />
+              <Checkout cartItems={cartItems} />
             </AppLayout>
           }
         />
@@ -138,6 +156,14 @@ function App() {
           element={
             <AppLayout cartItems={cartItems} onUpdateCart={handleUpdateCart}>
               <Signin />
+            </AppLayout>
+          }
+        />
+        <Route
+          path="/contact-us"
+          element={
+            <AppLayout cartItems={cartItems} onUpdateCart={handleUpdateCart}>
+              <ContactUs />
             </AppLayout>
           }
         />
