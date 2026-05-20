@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
 import Footer from '../Components/Footer.jsx'
 import Card from './Card.jsx'
+import { apiUrl } from '../utils/api.js'
 
 const allProductsData = {
   En: {
@@ -294,7 +295,7 @@ export default function Shop({ onAddToCart }) {
     setLoadError('')
 
     try {
-      const response = await fetch('http://localhost:5000/api/products')
+      const response = await fetch(apiUrl('/api/products'))
       if (!response.ok) {
         throw new Error('Failed to load products')
       }

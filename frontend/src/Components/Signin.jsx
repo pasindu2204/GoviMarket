@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
+import { apiUrl } from '../utils/api.js'
 
 const signinCopy = {
 	En: {
@@ -117,8 +118,6 @@ function InputField({ label, type = 'text', placeholder, name, value, onChange }
 	)
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
-
 function Signin() {
 	const { language } = useContext(LanguageContext)
 	const [mode, setMode] = useState('register')
@@ -162,7 +161,7 @@ function Signin() {
 			}
 
 		try {
-			const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+			const response = await fetch(apiUrl(endpoint), {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

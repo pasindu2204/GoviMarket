@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
+import { apiUrl } from '../utils/api.js'
 
 const searchContent = {
   En: {
@@ -42,7 +43,7 @@ function Searchbar() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/products')
+        const response = await fetch(apiUrl('/api/products'))
         if (response.ok) {
           const data = await response.json()
           const normalizedProducts = Array.isArray(data) ? data : data?.products || []

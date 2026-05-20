@@ -1,6 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { LanguageContext } from '../context/LanguageContext.jsx'
+import { apiUrl } from '../utils/api.js'
 
 const pageCopy = {
   En: {
@@ -147,7 +148,7 @@ function buildStory(product, language) {
 }
 
 async function fetchProducts() {
-  const response = await fetch('http://localhost:5000/api/products')
+  const response = await fetch(apiUrl('/api/products'))
   if (!response.ok) {
     throw new Error('Failed to load product list')
   }
