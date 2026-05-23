@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react'
 import { LanguageContext } from '../context/LanguageContext.jsx'
+import { apiUrl } from '../utils/api.js'
 
 const content = {
   En: {
@@ -138,6 +139,7 @@ function ContactUs() {
     message: '',
   })
   const [statusMessage, setStatusMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -147,21 +149,44 @@ function ContactUs() {
     }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    setStatusMessage(current.sentStatus)
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
-    })
+
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch(apiUrl('/api/contact-us'), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const payload = await response.json()
+
+      if (!response.ok) {
+        throw new Error(payload.message || 'Unable to send message.')
+      }
+
+      setStatusMessage(payload.message || current.sentStatus)
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      })
+    } catch (error) {
+      setStatusMessage(error.message || 'Unable to send message.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <section className="mx-auto w-full max-w-7xl py-8 md:py-12">
-      <div className="relative overflow-hidden rounded-[32px] border border-white/70 bg-[linear-gradient(145deg,rgba(255,255,255,0.92),rgba(255,243,231,0.82))] px-5 py-6 shadow-[0_24px_60px_rgba(89,47,14,0.14)] md:px-8 md:py-8">
+      <div className="relative overflow-hidden rounded-4xl border border-white/70 bg-[linear-gradient(145deg,rgba(255,255,255,0.92),rgba(255,243,231,0.82))] px-5 py-6 shadow-[0_24px_60px_rgba(89,47,14,0.14)] md:px-8 md:py-8">
         <div className="pointer-events-none absolute -top-14 right-0 h-44 w-44 rounded-full bg-[rgba(255,181,115,0.28)] blur-3xl" />
         <div className="pointer-events-none absolute bottom-0 left-0 h-44 w-44 rounded-full bg-[rgba(234,106,26,0.12)] blur-3xl" />
 
@@ -260,9 +285,10 @@ function ContactUs() {
                 <p className="text-sm text-(--muted)">{statusMessage || current.status}</p>
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="inline-flex h-12 items-center justify-center rounded-full bg-linear-to-br from-(--brand-deep) to-(--brand) px-6 text-sm font-semibold text-white shadow-[0_16px_28px_rgba(234,106,26,0.24)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_20px_32px_rgba(234,106,26,0.28)]"
                 >
-                  {current.labels.submit}
+                  {isSubmitting ? 'Sending...' : current.labels.submit}
                 </button>
               </div>
             </form>
