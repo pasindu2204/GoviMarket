@@ -28,7 +28,7 @@ async function proxyRequest(request, response) {
 		return response.send(text)
 	} catch (error) {
 		return response.status(502).json({
-			message: 'Unable to reach the backend products service.',
+			message: 'Unable to reach the backend contact service.',
 			error: error.message,
 		})
 	}
@@ -37,7 +37,7 @@ async function proxyRequest(request, response) {
 export default async function handler(request, response) {
 	if (request.method === 'OPTIONS') {
 		response.setHeader('Access-Control-Allow-Origin', '*')
-		response.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS')
+		response.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS')
 		response.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 		return response.status(204).end()
 	}
