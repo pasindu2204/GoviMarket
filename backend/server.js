@@ -42,10 +42,12 @@ mongoose.connection.on('disconnected', () => {
   console.warn('MongoDB disconnected');
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`);
-});
+// // Start server only when running locally
+// if (require.main === module) {
+//   app.listen(PORT, () => {
+//     console.log(`Backend running on port ${PORT}`);
+//   });
+// }
 
 // MongoDB connect function
 async function connectMongoWithRetry() {
@@ -66,3 +68,5 @@ async function connectMongoWithRetry() {
 }
 
 connectMongoWithRetry();
+
+module.exports = app;
