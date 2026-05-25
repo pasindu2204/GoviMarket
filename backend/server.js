@@ -28,6 +28,7 @@ app.use('/api/contact-us', contactUsRoutes);
 
 
 const MONGO_URI = process.env.MONGO_URI;
+let server;
 
 // MongoDB connection events
 mongoose.connection.on('connected', () => {
@@ -42,12 +43,17 @@ mongoose.connection.on('disconnected', () => {
   console.warn('MongoDB disconnected');
 });
 
-// // Start server only when running locally
-// if (require.main === module) {
-//   app.listen(PORT, () => {
-//     console.log(`Backend running on port ${PORT}`);
-//   });
-// }
+function startServer() {
+  if (server) {
+    return server;
+  }
+
+  server = app.listen(PORT, () => {
+    console.log(`Backend running on port ${PORT}`);
+  });
+
+  return server;
+}
 
 // MongoDB connect function
 async function connectMongoWithRetry() {
@@ -69,4 +75,9 @@ async function connectMongoWithRetry() {
 
 connectMongoWithRetry();
 
+if (require.main === module) {
+  startServer();
+}
+
 module.exports = app;
+module.exports.startServer = startServer;
