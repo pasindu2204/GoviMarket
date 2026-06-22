@@ -7,6 +7,7 @@ function buildTargetUrl(requestUrl) {
 async function proxyRequest(request, response) {
 	try {
 		const targetUrl = buildTargetUrl(request.url)
+		console.log('[proxy] contact-us ->', targetUrl)
 		const upstreamResponse = await fetch(targetUrl, {
 			method: request.method,
 			headers: {
