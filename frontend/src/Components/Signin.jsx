@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { LanguageContext } from '../context/LanguageContext.jsx'
 import { apiUrl } from '../utils/api.js'
 
@@ -186,6 +187,7 @@ function Signin() {
 
 			setMessage(data.message || 'Request completed successfully.')
 			setMessageType('success')
+			toast.success(data.message || 'Request completed successfully.')
 
 			if (isRegisterMode) {
 				setMode('login')
@@ -199,6 +201,7 @@ function Signin() {
 		} catch (error) {
 			setMessage(error.message || 'Unable to submit the form.')
 			setMessageType('error')
+			toast.error(error.message || 'Unable to submit the form.')
 		} finally {
 			setIsSubmitting(false)
 		}

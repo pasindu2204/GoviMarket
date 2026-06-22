@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import Navbar from './Components/Navbar.jsx'
 import AdvertisementBanner from './Components/AdvertisementBanner.jsx'
 import FarmHeroSection from './Components/FarmHeroSection.jsx'
@@ -86,8 +87,10 @@ function App() {
           : item
       )
       setCartItems(updated)
+      toast.success(`${product.name || 'Item'} quantity updated in cart.`)
     } else {
       setCartItems([...cartItems, { ...product, quantity: 1 }])
+      toast.success(`${product.name || 'Item'} added to cart.`)
     }
   }
 
@@ -115,7 +118,7 @@ function App() {
           path="/checkout"
           element={
             <AppLayout cartItems={cartItems} onUpdateCart={handleUpdateCart}>
-              <Checkout cartItems={cartItems} />
+              <Checkout cartItems={cartItems} onUpdateCart={handleUpdateCart} />
             </AppLayout>
           }
         />

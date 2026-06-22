@@ -42,15 +42,15 @@ const pageContent = {
 	Si: {
 		badge: 'සාම්ප්‍රදායික මේසය',
 		title: 'ශ්‍රී ලාංකික ආහාර',
-		subtitle: 'Backend seed ලැයිස්තුවෙන් තෝරාගත් සාම්ප්‍රදායික ආහාර කිහිපයක්.',
-		heroNote: 'සම්පූර්ණ catalog එක නොව, Sri Lankan traditional foods කිහිපයක් පමණක් මෙහි පෙන්වයි.',
+		subtitle: 'ලැයිස්තුවෙන් තෝරාගත් සාම්ප්‍රදායික ආහාර කිහිපයක්.',
+		heroNote: 'සම්පූර්ණ ලැයිස්තු එක නොව, ශ්‍රී ලාංකික සාම්ප්‍රදායික ආහාර කිහිපයක් පමණක් මෙහි පෙන්වයි.',
 		stats: [
 			{ value: 'Seed sync', label: 'Backend products වලින්' },
 			{ value: 'Curated', label: 'සාම්ප්‍රදායික ආහාර පමණි' },
 			{ value: 'Quick view', label: 'Fresh page flow එකමයි' },
 		],
 		sectionTitle: 'සාම්ප්‍රදායික තේරීම්',
-		sectionText: 'Rice සහ dry-fish වගේ හැදෑරූ staples backend seed data එකෙන් තෝරාගත්තා.',
+		sectionText: 'සහල් සහ වියළි මාළු වගේ ලැයිස්තුවෙන් තෝරාගත් සාම්ප්‍රදායික ආහාර කිහිපයක් තෝරාගත්තා.',
 		loading: 'ආහාර අයිතම පූරණය වෙමින්...',
 		error: 'ආහාර අයිතම පූරණය කළ නොහැක. backend port 5000 මත ක්‍රියාත්මක වන බව තහවුරු කරන්න.',
 		empty: 'Seed data තුළ සාම්ප්‍රදායික ආහාර සොයාගත නොහැකි විය.',

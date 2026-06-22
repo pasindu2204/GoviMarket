@@ -17,6 +17,9 @@ const pageContent = {
     ],
     sectionTitle: 'Freshly brought items',
     sectionText: 'A focused collection of the freshest produce currently available in the seed data.',
+    itemsLabel: 'Items',
+    reviewsLabel: 'Reviews',
+    featuredLabel: 'Featured',
     loading: 'Loading fresh items...',
     error: 'Unable to load fresh items. Make sure the backend is running on port 5000.',
     empty: 'No fresh items were found in the seed data.',
@@ -34,26 +37,32 @@ const pageContent = {
     ],
     sectionTitle: 'புதியதாக கொண்டுவரப்பட்ட பொருட்கள்',
     sectionText: 'தற்போது seed data-வில் உள்ள மிகப் புதிய பொருட்களின் தொகுப்பு.',
+    itemsLabel: 'பொருட்கள்',
+    reviewsLabel: 'விமர்சனங்கள்',
+    featuredLabel: 'சிறப்பு',
     loading: 'புதிய பொருட்கள் ஏற்றப்படுகின்றன...',
     error: 'புதிய பொருட்களை ஏற்ற முடியவில்லை. backend port 5000 இல் இயங்குகிறதா என உறுதிப்படுத்தவும்.',
     empty: 'Seed data-வில் புதிய பொருட்கள் எதுவும் இல்லை.',
     filterLabel: 'புதிய தேர்வுகள்',
   },
   Si: {
-    badge: 'දෛනික නැවුම්',
+    badge: 'දෛනික නිෂ්පාදන',
     title: 'නැවුම් නිෂ්පාදන',
-    subtitle: 'අද උදෑසන ගත්, seed ලැයිස්තුවෙන් සෘජුවම ගෙනා නිෂ්පාදන.',
-    heroNote: 'Backend seed තුළ Fresh ලෙස සලකුණු කර ඇති අයිතම පමණක් මෙහි පෙන්වයි.',
+    subtitle: 'අද දිනයේ ගත්, ලැයිස්තුවෙන් සෘජුවම ගෙනා නිෂ්පාදන.',
+    heroNote: 'ලැයිස්තුව තුළ නැවුම් නිෂ්පාදන අයිතම පමණක් මෙහි පෙන්වයි.',
     stats: [
       { value: 'Seed sync', label: 'Backend products වෙතින්' },
       { value: 'Fresh only', label: 'Fresh tag එකෙන් පෙරහන් කළා' },
       { value: 'Quick view', label: 'වේගවත් browse කිරීම සඳහා' },
     ],
     sectionTitle: 'නැවුම් ලෙස ගෙනා අයිතම',
-    sectionText: 'දැන් seed data තුළ ඇති ඉතා නැවුම් නිෂ්පාදන එකතුව.',
+    sectionText: 'දැන් ලැයිස්තුව තුළ ඇති ඉතා නැවුම් නිෂ්පාදන එකතුව.',
+    itemsLabel: 'අයිතම',
+    reviewsLabel: 'සමාලෝචන',
+    featuredLabel: 'විශේෂ',
     loading: 'නැවුම් අයිතම පූරණය වෙමින්...',
-    error: 'නැවුම් අයිතම පූරණය කළ නොහැක. backend port 5000 මත ක්‍රියාත්මක වන බව තහවුරු කරන්න.',
-    empty: 'Seed data තුළ නැවුම් අයිතම සොයාගත නොහැකි විය.',
+    error: 'නැවුම් අයිතම පූරණය කළ නොහැක.',
+    empty: 'නැවුම් අයිතම සොයාගත නොහැකි විය.',
     filterLabel: 'නැවුම් තේරීම්',
   },
 }
@@ -246,15 +255,15 @@ export default function Fresh({ onAddToCart }) {
 
             <div className="mt-6 grid gap-3 sm:grid-cols-3 xl:grid-cols-1">
               <div className="rounded-[20px] border border-white/10 bg-black/20 p-4">
-                <p className="text-xs uppercase tracking-[0.22em] text-emerald-100/55">Items</p>
+                <p className="text-xs uppercase tracking-[0.22em] text-emerald-100/55">{content.itemsLabel}</p>
                 <p className="mt-2 text-3xl font-black text-[#fff8ec]">{freshProducts.length.toString().padStart(2, '0')}</p>
               </div>
               <div className="rounded-[20px] border border-white/10 bg-black/20 p-4">
-                <p className="text-xs uppercase tracking-[0.22em] text-emerald-100/55">Reviews</p>
+                <p className="text-xs uppercase tracking-[0.22em] text-emerald-100/55">{content.reviewsLabel}</p>
                 <p className="mt-2 text-3xl font-black text-[#fff8ec]">{totalReviews.toLocaleString()}</p>
               </div>
               <div className="rounded-[20px] border border-white/10 bg-black/20 p-4">
-                <p className="text-xs uppercase tracking-[0.22em] text-emerald-100/55">Featured</p>
+                <p className="text-xs uppercase tracking-[0.22em] text-emerald-100/55">{content.featuredLabel}</p>
                 <p className="mt-2 text-3xl font-black text-[#fff8ec]">{spotlightProducts.length}</p>
               </div>
             </div>

@@ -1,6 +1,8 @@
 import { useContext, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { LanguageContext } from '../context/LanguageContext.jsx'
+import { apiUrl } from '../utils/api.js'
 
 const checkoutContent = {
   En: {
@@ -91,7 +93,17 @@ function getCurrencyAmount(price) {
   return parseFloat(String(price ?? 0).replace(/[^\d.]/g, '')) || 0
 }
 
-export default function Checkout({ cartItems = [] }) {
+function normalizeCheckoutItems(cartItems) {
+  return cartItems.map((item) => ({
+    productId: String(item.productId ?? item.id ?? ''),
+    name: String(item.name ?? '').trim(),
+    price: getCurrencyAmount(item.price),
+    quantity: Number(item.quantity ?? 1) || 1,
+    image: item.image ? String(item.image) : undefined,
+  }))
+}
+
+export default function Checkout({ cartItems = [], onUpdateCart }) {
   const { language } = useContext(LanguageContext)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
@@ -105,6 +117,8 @@ export default function Checkout({ cartItems = [] }) {
     notes: '',
   })
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const subtotal = useMemo(
     () =>
@@ -124,7 +138,45 @@ export default function Checkout({ cartItems = [] }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    setSubmitted(true)
+
+    async function submitOrder() {
+      setIsSubmitting(true)
+      setSubmitError('')
+
+      try {
+        const payload = {
+          ...formData,
+          items: normalizeCheckoutItems(cartItems),
+        }
+
+        const response = await fetch(apiUrl('/api/checkout'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        })
+
+        const contentType = response.headers.get('content-type') || ''
+        const data = contentType.includes('application/json') ? await response.json() : null
+
+        if (!response.ok) {
+          throw new Error(data?.message || 'Unable to save checkout order.')
+        }
+
+        setSubmitted(true)
+        toast.success(data?.message || 'Checkout order saved successfully.')
+        onUpdateCart?.([])
+      } catch (error) {
+        setSubmitError(error.message || 'Unable to save checkout order.')
+        setSubmitted(false)
+        toast.error(error.message || 'Unable to save checkout order.')
+      } finally {
+        setIsSubmitting(false)
+      }
+    }
+
+    submitOrder()
   }
 
   return (
@@ -267,6 +319,12 @@ export default function Checkout({ cartItems = [] }) {
                 </div>
               )}
 
+              {submitError && (
+                <div className="rounded-[20px] border border-red-300/20 bg-red-300/10 px-5 py-4 text-sm font-medium text-red-50">
+                  {submitError}
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
@@ -284,9 +342,10 @@ export default function Checkout({ cartItems = [] }) {
                 </button>
                 <button
                   type="submit"
+                  disabled={isSubmitting || cartItems.length === 0}
                   className="rounded-full border border-[#efc34a]/40 bg-[#efc34a]/15 px-5 py-3 font-black text-[#fff0c7] transition hover:bg-[#efc34a]/20"
                 >
-                  {checkoutText(language, 'placeOrder')}
+                  {isSubmitting ? 'Saving order...' : checkoutText(language, 'placeOrder')}
                 </button>
               </div>
             </form>

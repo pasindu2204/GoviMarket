@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react'
+import { toast } from 'react-toastify'
 import { LanguageContext } from '../context/LanguageContext.jsx'
 import { apiUrl } from '../utils/api.js'
 
@@ -170,6 +171,7 @@ function ContactUs() {
       }
 
       setStatusMessage(payload.message || current.sentStatus)
+      toast.success(payload.message || current.sentStatus)
       setFormData({
         name: '',
         email: '',
@@ -179,6 +181,7 @@ function ContactUs() {
       })
     } catch (error) {
       setStatusMessage(error.message || 'Unable to send message.')
+      toast.error(error.message || 'Unable to send message.')
     } finally {
       setIsSubmitting(false)
     }
